@@ -5,13 +5,13 @@
 
 Files changed:
 brendan_morgenstern.readme.md
-app/models.py
-app/main/forms.py
-app/main/routes.py
-app/templates/main/todolist.html
-app/templates/main/todolist.old.html
-app/templates/main/todolist_edit_view.html
-app/templates/main/todolist_edit_view.old.html
+-app/models.py
+-app/main/forms.py
+-app/main/routes.py
+-app/templates/main/todolist.html
+-app/templates/main/todolist.old.html
+-app/templates/main/todolist_edit_view.html
+-app/templates/main/todolist_edit_view.old.html
 
 Features not yet implemented:
 - Delete appointments
