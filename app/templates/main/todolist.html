@@ -10,47 +10,50 @@
                         <h4 class="card-title">CUS1166 - Todo List</h4>
                         <form method="POST" action="{{url_for('main.todolist')}}" >
 
-                        <div class="add-items d-flex">
+                        <!--<div class="add-items d-flex">-->
+                        <div class="add-items"
                                 <!-- csrf_token is required to validate the form -->
                                 {{ form.csrf_token }}
-                                {{ form.task_desc(class_='form-control todo-list-input', placeholder='What do you need to do today?')}}
-                                {{ form.task_status_completed }}
+				<!--
+                                DEBUG: Remove this comment before release!
+				{ form.task_desc(class_='form-control todo-list-input', placeholder='What do you need to do today?')}
+                                { form.task_status_completed }
+				Appointments format is "appointment_date, appointment_dur, appointment_loc, appointment_client, appointment_desc"
+				-->
+                                {{ form.appointment_date(class_='form-control todo-list-input', placeholder='When are you meeting? Format is YYYY-MM-DD HH:MM:SS')}}
+                                {{ form.appointment_dur(class_='form-control todo-list-input', placeholder='When does the meeting end? Format is YYYY-MM-DD HH:MM:SS')}}
+                                {{ form.appointment_loc(class_='form-control todo-list-input', placeholder='Where are you meeting?')}}
+                                {{ form.appointment_client(class_='form-control todo-list-input', placeholder='Who are you meeting?')}}
+                                {{ form.appointment_desc(class_='form-control todo-list-input', placeholder='Why are you meeting?')}}
                                 <button class="add btn btn-primary font-weight-bold todo-list-add-btn">Add</button>
                        </div>
                      </form>
 
-                       <!-- Show current tasks if avaiblae -->
-                        <div class="list-wrapper">
+                       <!-- Show current tasks if available -->
+			<div class="list-wrapper">
                             <ul class="d-flex flex-column-reverse todo-list">
                              {% for task in todo_list %}
 
-                                {% if 'done' == task.task_status%}
-                                    <li class="completed">
-                                {% else %}
                                     <li>
-                                {% endif %}
-                                    <a href="{{url_for('main.edit_task',task_id=task.task_id)}}">
+				    <!-- Editing not supported yet -->
+                                    <a href="">
                                          <i class="fas fa-edit"></i>
                                     </a>
 
                                     <div class="form-check">
 
                                       <label class="form-check-label">
-                                          {% if 'done' == task.task_status %}
-                                            {{task.task_desc}} - <span class="badge badge-success">{{task.task_status}}</span>
-                                          {% elif 'doing' == task.task_status %}
-                                            {{task.task_desc}} - <span class="badge badge-warning">{{task.task_status}}</span>
-                                          {% elif 'todo' == task.task_status %}
-                                             {{task.task_desc}} - <span class="badge badge-danger">{{task.task_status}}</span>
-                                          {% endif %}
+                                            From {{task.appointment_date}} to {{task.appointment_dur}} - Meeting {{task.appointment_client}} at {{task.appointment_loc}} - Notes: {{task.appointment_desc}}
                                             <i class="input-helper"></i>
                                       </label>
                                     </div>
-                                    <a href="{{url_for('main.remove_task',task_id=task.task_id)}}" class="remove"><i class="fas fa-times"></i></a>
+				    <!-- Deleting not supported yet -->
+                                    <a href="" class="remove"><i class="fas fa-times"></i></a>
                               </li>
                              {% endfor %}
                             </ul>
                         </div>
+
                     </div>
                 </div>
             </div>

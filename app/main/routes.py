@@ -1,8 +1,10 @@
 from flask import render_template,  redirect, url_for
 from app.main import bp
 from app import db
-from app.main.forms import TaskForm
-from app.models import Task
+#from app.main.forms import TaskForm
+from app.main.forms import AppointmentForm
+#from app.models import Task
+from app.models import Appointment
 
 
 # Main route of the applicaitons.
@@ -15,21 +17,30 @@ def index():
 #  Route for viewing and adding new tasks.
 @bp.route('/todolist', methods=['GET','POST'])
 def todolist():
-    form = TaskForm()
+    #form = TaskForm()
+    form = AppointmentForm()
 
     if form.validate_on_submit():
         # Get the data from the form, and add it to the database.
-        new_task = Task()
-        new_task.task_desc =  form.task_desc.data
-        new_task.task_status = form.task_status_completed.data
+        #new_task = Task()
+        new_appointment = Appointment()
+        #new_task.task_desc =  form.task_desc.data
+        new_appointment.appointment_date = form.appointment_date.data
+        #new_task.task_status = form.task_status_completed.data
+        new_appointment.appointment_dur = form.appointment_dur.data
+        new_appointment.appointment_loc = form.appointment_loc.data
+        new_appointment.appointment_client = form.appointment_client.data
+        new_appointment.appointment_desc = form.appointment_desc.data
 
-        db.session.add(new_task)
+        #db.session.add(new_task)
+        db.session.add(new_appointment)
         db.session.commit()
 
         # Redirect to this handler - but without form submitted - gets a clear form.
         return redirect(url_for('main.todolist'))
 
-    todo_list = db.session.query(Task).all()
+    #todo_list = db.session.query(Task).all()
+    todo_list = db.session.query(Appointment).all()
 
     return render_template("main/todolist.html",todo_list = todo_list,form= form)
 
